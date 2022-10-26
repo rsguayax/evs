@@ -1,0 +1,28 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<p>Estimado <strong>${fullName}</strong>:</p>	
+		<p>Mediante el presente remitimos a usted los resultados y los link para descargar los 
+		cuadernillos de preguntas disponibles correspondientes a la evaluaci&oacute;n <b>${evaluationEventName}</b>.</p>
+		
+		<table border="1" cellpadding="5px">
+			<tr>
+				<th>Materia</th><th>C&oacute;digo</th><th>Evaluaci&oacute;n</th><th>Nota</th><th>Link</th>
+			</tr>
+			#foreach ($key in $elements.keySet())
+				<tr>
+					<td>$elements.get($key).matterName</td>
+					<td>$elements.get($key).matterCode</td>
+					<td>$elements.get($key).evaluationType</td>
+					<td>$elements.get($key).rate</td>
+					<td><a href="$elements.get($key).testUrl">Detalle</a></td>
+				</tr>
+			#end
+		</table>
+	
+		<p>Cordialmente,</p>
+	
+		<p><strong>VICERRECTORADO DE MODALIDAD A DISTANCIA</strong></p>
+	</body>
+</html>

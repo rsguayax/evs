@@ -1,0 +1,2 @@
+ALTER TABLE evaluation_event_evaluation_center_center
+drop CONSTRAINT fk66b3b446e01cbb6;

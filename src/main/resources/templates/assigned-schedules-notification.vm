@@ -1,0 +1,15 @@
+<html>
+<head>
+</head>
+<body>
+	Estimado <strong>${userFullName}</strong>:
+
+	<p>Mediante el presente correo electr&oacute;nico le invitamos a que consulte los horarios de las evaluaciones presenciales correspondientes a: <strong>${evaluationEventName}</strong></p>
+
+	<p>Por favor, consulte sus horarios de las evaluaciones presenciales haciendo clic <a href="${callbackUrl}"><strong>aqu&iacute;</strong></a>.</p>
+
+	<p>Cordialmente,</p>
+
+	<p><strong>VICERRECTORADO DE MODALIDAD A DISTANCIA</strong></p>
+</body>
+</html>

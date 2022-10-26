@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/views/decorators">
+    <decorator name="main" page="main.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+    <decorator name="student" page="student.jsp">
+    	<pattern>/student</pattern>
+        <pattern>/student/*</pattern>
+    </decorator>
+	<excludes>		
+        <pattern>/login*</pattern>
+        <pattern>*.html*</pattern>
+        <pattern>*.http*</pattern>
+        <pattern>/ajax*</pattern>
+    </excludes>
+</decorators>

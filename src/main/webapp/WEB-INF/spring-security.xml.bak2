@@ -1,0 +1,134 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd ">
+	
+	<beans:import resource="/classes/spring/appServlet/servlet-context.xml" />
+	
+
+	<!-- Password Hashing Bean -->
+    <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" >
+            <beans:constructor-arg name="strength" value="12" />
+    </beans:bean>
+
+	<beans:bean id="utplAuthProvider" scope="prototype" autowire="constructor" class="es.grammata.evaluation.evs.security.UtplAuthProvider" />
+
+	<beans:bean id="localAuthProvider" scope="prototype" autowire="constructor" class="es.grammata.evaluation.evs.security.LocalAuthProvider" />
+	
+	<beans:bean id="evsAuthenticationDetailsSource" class="es.grammata.evaluation.evs.security.EvsAuthenticationDetailsSource" />
+	
+    <beans:bean id="evsUrlAuthenticationSuccessHandler" class="es.grammata.evaluation.evs.security.EvsUrlAuthenticationSuccessHandler" />
+
+
+	<http entry-point-ref="restAuthenticationEntryPoint"  pattern="/rest/**"
+		use-expressions="true" auto-config="true" access-decision-manager-ref="accessDecisionManager">
+		<custom-filter ref="restFilter" position="PRE_AUTH_FILTER" />
+		<logout />
+	</http>
+
+	<beans:bean id="restAuthenticationEntryPoint"
+		class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint" />
+
+	<beans:bean id="restFilter" class="es.grammata.evaluation.evs.services.restservices.server.CustomAuthenticationFilter">
+		<beans:property name="authenticationSuccessHandler" ref="mySuccessHandler" />
+		<beans:property name="authenticationManager" ref="restAuthManager" />
+	</beans:bean>
+
+	<beans:bean id="mySuccessHandler" class="es.grammata.evaluation.evs.services.restservices.server.CustomAuthenticationSuccessHandler" />
+
+	<beans:bean id="accessDecisionManager"
+		class="org.springframework.security.access.vote.UnanimousBased">
+		<beans:property name="allowIfAllAbstainDecisions" value="true" />
+		<beans:property name="decisionVoters">
+			<beans:list>
+				<beans:bean class="org.springframework.security.access.vote.RoleVoter">
+					<beans:property name="rolePrefix" value="" />
+				</beans:bean>
+				<beans:bean
+					class="org.springframework.security.access.vote.AuthenticatedVoter" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	
+	
+	
+	<!--   <http pattern="/rest/ProductsService/getProductsList/**"
+		authentication-manager-ref="restAuthManager" entry-point-ref="restServicesEntryPoint"
+		create-session="stateless">
+		<custom-filter ref="restServicesFilter"
+			before="PRE_AUTH_FILTER" />
+	</http> -->
+
+	<http auto-config="true" use-expressions="true" access-denied-page="/access_denied">
+		<http-basic/>
+		<intercept-url pattern="/" access="hasAnyRole('ADMIN', 'TEACHER', 'EVENT_ADMIN')" />
+		<intercept-url pattern="/home" access="hasAnyRole('ADMIN', 'TEACHER', 'EVENT_ADMIN')" />
+		<intercept-url pattern="/evaluationcenter/**" access="hasAnyRole('ADMIN', 'TEACHER', 'EVENT_ADMIN')" />
+		<intercept-url pattern="/evaluationevent/**" access="hasAnyRole('ADMIN', 'TEACHER', 'EVENT_ADMIN')" />
+		<intercept-url pattern="/bank/**" access="hasAnyRole('ADMIN', 'TEACHER', 'EVENT_ADMIN')" />
+		<intercept-url pattern="/matter/**" access="hasAnyRole('ADMIN', 'TEACHER', 'EVENT_ADMIN')" />
+		<intercept-url pattern="/eventclassroom/**" access="hasAnyRole('ADMIN', 'TEACHER', 'EVENT_ADMIN')" />
+		<intercept-url pattern="/*.http" access="hasAnyRole('ADMIN', 'TEACHER', 'EVENT_ADMIN')" />
+		<intercept-url pattern="/aux/**" access="hasAnyRole('ADMIN', 'TEACHER', 'EVENT_ADMIN')" />
+		<intercept-url pattern="/student/**" access="hasAnyRole('STUDENT')" />
+		
+		<form-login authentication-details-source-ref="evsAuthenticationDetailsSource"
+		    login-page="/login"
+		    authentication-success-handler-ref="evsUrlAuthenticationSuccessHandler" 
+			authentication-failure-url="/login?error" 
+			username-parameter="username"
+			password-parameter="password" />
+		<logout invalidate-session="true" logout-success-url="/login?logout" logout-url="/logout" />
+
+		<!-- enable csrf protection -->
+		<!-- <csrf/> -->
+	</http>
+	
+		
+	
+
+
+	<!-- Select users and user_roles from database -->
+	<authentication-manager alias="authManager">
+	  <authentication-provider>
+			<user-service>
+				<user name="admin" password="admin" authorities="ADMIN" />
+			</user-service>
+	  </authentication-provider>
+	  <authentication-provider ref="utplAuthProvider"/>
+	  <authentication-provider ref="localAuthProvider"/>
+	</authentication-manager>
+	
+	
+	<authentication-manager alias="restAuthManager">
+	  <authentication-provider>
+			<user-service>
+				<user name="admin" password="admin" authorities="ADMIN" />
+			</user-service>
+	  </authentication-provider>
+	</authentication-manager>
+
+
+	<!-- Entry point for REST service. -->
+	<beans:bean id="restServicesEntryPoint" class="es.grammata.evaluation.evs.services.restservices.server.RestAuthenticationEntryPoint" />
+	
+	
+	<!-- Filter for REST services. -->
+	<beans:bean id="restServicesFilter"
+		class="es.grammata.evaluation.evs.services.restservices.server.RestUsernamePasswordAuthenticationFilter">
+		<beans:property name="postOnly" value="false" />
+		<beans:property name="authenticationManager" ref="restAuthManager" />
+		<beans:property name="authenticationSuccessHandler" ref="restServicesSuccessHandler" />
+	</beans:bean>
+	<!-- A handler for successful REST service authentication. -->
+	<beans:bean id="restServicesSuccessHandler" class="es.grammata.evaluation.evs.services.restservices.server.RestAuthenticationSuccessHandler" />
+	
+</beans:beans>

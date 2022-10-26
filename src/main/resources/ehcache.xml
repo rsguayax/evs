@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false" name="MyCacheManager">
+    <!-- Location of persistent caches on disk -->
+    <diskStore path="java.io.tmpdir" />
+ 
+ 	<defaultCache eternal="false" overflowToDisk="false" diskPersistent="false" 
+ 			timeToIdleSeconds="0" timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU" />
+ 			
+    <cache name="Aux" timeToIdleSeconds="300" 
+    			timeToLiveSeconds="1800" eternal="false" overflowToDisk="false" diskPersistent="false" 
+    			memoryStoreEvictionPolicy="LFU" />
+ </ehcache>

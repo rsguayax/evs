@@ -1,0 +1,9 @@
+mvn install:install-file -Dfile=utpl-centroseducativos-client.jar -DgroupId=es.grammata.evaluation.ws.utpl.client -DartifactId=utpl-centroseducativos-client -Dversion=1.0.0 -Dpackaging=jar -DgeneratePom=true
+
+mvn install:install-file -Dfile=utpl-periodosacademicos-client.jar -DgroupId=es.grammata.evaluation.ws.utpl.client -DartifactId=utpl-periodosacademicos-client -Dversion=1.0.0 -Dpackaging=jar -DgeneratePom=true
+
+mvn install:install-file -Dfile=utpl-nivelacademico-client.jar -DgroupId=es.grammata.evaluation.ws.utpl.client -DartifactId=utpl-nivelacademico-client -Dversion=1.0.0 -Dpackaging=jar -DgeneratePom=true
+
+mvn install:install-file -Dfile=utpl-modalidad-client.jar -DgroupId=es.grammata.evaluation.ws.utpl.client -DartifactId=utpl-modalidad-client -Dversion=1.0.0 -Dpackaging=jar -DgeneratePom=true
+
+mvn install:install-file -Dfile=siette-http-3.6.jar -DgroupId=siette.interfaces -DartifactId=siette-http -Dversion=3.6.0 -Dpackaging=jar -DgeneratePom=true

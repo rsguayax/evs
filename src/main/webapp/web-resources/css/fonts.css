@@ -1,0 +1,10 @@
+/* Custom fonts */
+
+@font-face {
+    font-family: "Gotham";
+    src: url("./fonts/Gotham-Bold.otf");
+}
+@font-face {
+    font-family: "GothamL";
+    src: url("./fonts/Gotham-Light.otf");
+}

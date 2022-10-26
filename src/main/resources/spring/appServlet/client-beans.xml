@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="httpInvokerRequestExecutor" class="es.grammata.evaluation.evs.security.UsernamePasswordAuthenticationSimpleHttpInvokerRequestExecutor">
+		<property name="username" value="${httpinvoker.username}" />
+		<property name="password" value="${httpinvoker.password}" />
+	</bean>
+
+	<bean id="bancoPreguntasBean"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl"
+			value="${httpinvoker.bancospreguntasUrl}"></property>
+		<property name="serviceInterface" value="siette.interfaces.BancosPreguntasServicios"></property>
+		<property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor" />
+	</bean>
+
+	<bean id="testsBean"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl"
+			value="${httpinvoker.testsUrl}"></property>
+		<property name="serviceInterface" value="siette.interfaces.TestsServicios"></property>
+		<property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor" />
+	</bean>
+
+	<bean id="gruposBean"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl"
+			value="${httpinvoker.gruposUrl}"></property>
+		<property name="serviceInterface" value="siette.interfaces.GruposServicios"></property>
+		<property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor" />
+	</bean>
+
+	<bean id="eventosEvaluacionBean"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl"
+			value="${httpinvoker.eventosEvaluacionUrl}"></property>
+		<property name="serviceInterface" value="siette.interfaces.EventosEvaluacionServicios"></property>
+		<property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor" />
+	</bean>
+	
+	<bean id="evsBean"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl"
+			value="${httpinvoker.evsUrl}"></property>
+		<property name="serviceInterface" value="org.siette.api.EvsService"></property>
+		<property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor" />
+	</bean>
+
+</beans>

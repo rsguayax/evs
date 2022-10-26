@@ -1,0 +1,39 @@
+/* Print Styles */
+@media print {
+
+#scheduleModificationPrint .block-info {
+	font-size: 14px;
+	padding: 10px 14px;
+}
+
+#scheduleModificationPrint .block-info h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    text-decoration: underline;
+}
+
+#scheduleModificationPrint .panel-body {
+	padding: 8px;
+}
+
+#evaluationInfoPrint h2 {
+	font-size: 22px;
+}
+
+#evaluationInfoPrint .studentName {
+	font-size: 14px !important;
+}
+
+#evaluationInfoPrint .matterTestInfo, #evaluationInfoPrint .testAlertMessage, #evaluationInfoPrint .matterTestInfo td {
+	font-size: 10px !important;;
+}
+
+.visible-print {
+	display: block;
+}
+
+.ng-hide {
+	display: none !important;
+}
+
+}

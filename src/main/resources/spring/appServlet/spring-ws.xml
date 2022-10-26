@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:sws="http://www.springframework.org/schema/web-services"
+       xmlns:oxm="http://www.springframework.org/schema/oxm"
+          xsi:schemaLocation=
+           "http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/web-services
+           http://www.springframework.org/schema/web-services/web-services-2.0.xsd
+           http://www.springframework.org/schema/oxm 
+           http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd">
+
+ 
+ <!-- 
+   There are two implementations of the WebServiceMessageSender:
+   HttpUrlConnectionMessageSender and CommonsHttpMessageSender.
+    
+   The CommonsHttpMessageSender provides advanced and easy-to-use functionality 
+   (such as authentication, HTTP connection pooling, and so forth).
+   This uses the Jakarta Commons HttpClient. 
+   See http://static.springsource.org/spring-ws/sites/2.0/reference/html/client.html#client-web-service-template
+  -->
+ <bean id="messageSender" class="org.springframework.ws.transport.http.CommonsHttpMessageSender"/>
+  
+ <!-- 
+   There are two message factories for SOAP: SaajSoapMessageFactory and AxiomSoapMessageFactory. 
+   If no message factory is specified (via the messageFactory property), Spring-WS will use 
+   the SaajSoapMessageFactory by default.
+   See: http://static.springsource.org/spring-ws/sites/2.0/reference/html/client.html#client-web-service-template
+  -->
+ <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory"/>
+   
+
+</beans>
